@@ -36,7 +36,6 @@ class Graph:
             
     def addVertex(self):
         self.vertices = np.arange(len(self.vertices) + 1)
-        print(f'Vertex {len(self.vertices)-1} added')
             
     def rmEdge(self, v1, v2):
         if [v1, v2] in self.edges:

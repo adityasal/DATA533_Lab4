@@ -15,6 +15,32 @@ class wtGraph(gr.Graph):
                 float(i)
             except:
                 raise TypeError('Weights must be numbers')
+                
+    #Alter addEdge method to accept a weight argument
+    def addEdge(self, v1, v2, weight):
+        if (v1 in self.vertices and v2 in self.vertices):
+            if [v1, v2] not in self.edges and [v2, v1] not in self.edges:
+                self.edges.append([v1, v2])
+                self.weights.append(weight)
+            else:
+                print('Edge already in edge set')
+        else:
+            print('Input valid vertices')
+            
+     #Alter method to remove weight as well
+    def rmEdge(self, v1, v2):
+        if [v1, v2] in self.edges:
+            self.weights.remove(self.weights[self.edges.index([v1,v2])])
+            self.edges.remove([v1, v2])
+        elif [v2, v1] in self.edges:
+            self.weights.remove(self.weights[self.edges.index([v2,v1])])
+            self.edges.remove([v2, v1])
+        else:
+            print('Edge not in edge set')
+            
+    #Alter method to print weights as well        
+    def printGraph(self):
+        print(f'Vertex set: {self.vertices}\nEdge set: {self.edges}\nWeights:{self.weights}')
         
     #Adjust the adjMatrix function to incorperate weights
     def adjMatrix(self): # Gives the adjacency matrix of the graph. Used in other functions

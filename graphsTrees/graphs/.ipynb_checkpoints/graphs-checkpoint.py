@@ -30,9 +30,9 @@ class Graph:
             if [v1, v2] not in self.edges and [v2, v1] not in self.edges:
                 self.edges.append([v1, v2])
             else:
-                print('Edge already in edge set')
+                return('Edge already in edge set')
         else:
-            print('Input valid vertices')
+            return('Input valid vertices')
             
     def addVertex(self):
         self.vertices = np.arange(len(self.vertices) + 1)
@@ -43,7 +43,7 @@ class Graph:
         elif [v2, v1] in self.edges:
             self.edges.remove([v2, v1])
         else:
-            print('Edge not in edge set')
+            return('Edge not in edge set')
             
     #This function broke my indexing for other functions and it was too much hassle to alter the indexes
 #     def rmVertex(self, vertex):
@@ -75,26 +75,28 @@ class Graph:
     
     # showSteps parameter allows me to not print the DFS steps when the function is called by hasCycles, isConnected, kruskal
     def DFS(self, start, visited = None, previous = None, showSteps = True, output = None):
-        toPrint = showSteps # Need to pass this in to make it work with recursion
-        verts = self.vertices
-        hasCycles = False #Used in the hasCycles method
-        matrix = self.adjMatrix() # I could only figure out how to make this work for adjacency matrices
-        if showSteps == True: #We want to block print when DFS called from other functions
-            print(f'Visit {start} from {previous}')
-        if visited == None:
-            visited = {start}
-            output = [start]
-        else:
-            visited.add(start)
-            output.append(start)
-        for i in verts:
-            if matrix[start][i] != 0:
-                if i in visited and i != previous:
-                    self.__cycles = True
-                elif i not in visited:
-                    self.DFS(i, visited, previous = start, showSteps = toPrint, output = output)
-        self.__connected = visited #We need these in the following two functions
-        return output
+        if start in self.vertices:
+            toPrint = showSteps # Need to pass this in to make it work with recursion
+            verts = self.vertices
+            hasCycles = False #Used in the hasCycles method
+            matrix = self.adjMatrix() # I could only figure out how to make this work for adjacency matrices
+            if showSteps == True: #We want to block print when DFS called from other functions
+                print(f'Visit {start} from {previous}')
+            if visited == None:
+                visited = {start}
+                output = [start]
+            else:
+                visited.add(start)
+                output.append(start)
+            for i in verts:
+                if matrix[start][i] != 0:
+                    if i in visited and i != previous:
+                        self.__cycles = True
+                    elif i not in visited:
+                        self.DFS(i, visited, previous = start, showSteps = toPrint, output = output)
+            self.__connected = visited #We need these in the following two functions
+            return output
+        else: return 'Invalid starting vertex'
         
     def isConnected(self):
         self.DFS(0, showSteps= False)

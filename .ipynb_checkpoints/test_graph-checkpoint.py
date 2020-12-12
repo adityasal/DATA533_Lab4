@@ -4,7 +4,9 @@ import unittest
 import pytest
 
 from graphsTrees.graphs.graphs import Graph
-from graphsTrees.graphs.wtGraphs import wtGraph
+from graphsTrees.exceptions.EricExceptions import weightError
+from graphsTrees.exceptions.EricExceptions import vertexError
+from graphsTrees.exceptions.EricExceptions import edgeError
 
 class TestGraph(unittest.TestCase):
     
@@ -27,16 +29,16 @@ class TestGraph(unittest.TestCase):
         print('Teardown')
         
     def test_init(self):
-        with pytest.raises(TypeError):
+        with pytest.raises(vertexError):
             # Vertex set is defined by an integer.
             Graph([1,2,3], [1,2])
-        with pytest.raises(ValueError):
+        with pytest.raises(edgeError):
             # There is no vertex 5 to have an edge to.
             Graph(4, [[0,1], [5,2]])
-        with pytest.raises(ValueError):
+        with pytest.raises(edgeError):
             # Try making an edge with 3 elements
             Graph(4, [[1,2,3]])
-        with pytest.raises(ValueError):
+        with pytest.raises(edgeError):
             Graph(4, 'Potato')
         
     def test_add_edge(self):

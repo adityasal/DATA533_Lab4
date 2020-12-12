@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+from graphsTrees.exceptions.EricExceptions import vertexError
+from graphsTrees.exceptions.EricExceptions import edgeError
 #Input must be of form vertex: integer. edges: list of lists of two elements of vertex set.
 
 # I wanted to implement graphs in a way that wasn't adjacency matrices or adjacency lists
@@ -17,16 +19,21 @@ class Graph:
         try:
             self.vertices = np.arange(vertices)
         except TypeError:
-            raise TypeError('Vertices is an integer, determining number of vertices')
+            raise vertexError('Vertices is an integer, determining number of vertices')
         self.edges = edges
-        for edge in edges:
-            if len(edge) != 2 or type(edge) != list:
-                raise ValueError('Edges must be two element lists')
-            if edge[0] not in self.vertices or edge[1] not in self.vertices:
-                raise ValueError('Edge connects non-existant vertex')
+        try:
+            for edge in edges:
+                if len(edge) != 2 or type(edge) != list:
+                    raise edgeError('Edges must be two element lists')
+                if edge[0] not in self.vertices or edge[1] not in self.vertices:
+                    raise edgeError('Edge connects non-existant vertex')
+        except TypeError:
+            raise edgeError("Edge set must be a list of two element lists")
     
     def addEdge(self, v1, v2):
-        if (v1 in self.vertices and v2 in self.vertices):
+        if type(v1) != int or type(v2) != int:
+            raise vertexError("Vertices are integers")
+        elif (v1 in self.vertices and v2 in self.vertices):
             if [v1, v2] not in self.edges and [v2, v1] not in self.edges:
                 self.edges.append([v1, v2])
             else:
@@ -38,12 +45,15 @@ class Graph:
         self.vertices = np.arange(len(self.vertices) + 1)
             
     def rmEdge(self, v1, v2):
-        if [v1, v2] in self.edges:
-            self.edges.remove([v1, v2])
-        elif [v2, v1] in self.edges:
-            self.edges.remove([v2, v1])
+        if type(v1) != int or type(v2) != int:
+            raise vertexError("Vertices are integers")
         else:
-            return('Edge not in edge set')
+            if [v1, v2] in self.edges:
+                self.edges.remove([v1, v2])
+            elif [v2, v1] in self.edges:
+                self.edges.remove([v2, v1])
+            else:
+                return('Edge not in edge set')
             
     #This function broke my indexing for other functions and it was too much hassle to alter the indexes
 #     def rmVertex(self, vertex):

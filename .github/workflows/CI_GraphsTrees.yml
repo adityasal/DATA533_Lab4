@@ -37,6 +37,6 @@ jobs:
 
       # Run the graph test files
       - name: Run Graphh test files
-        run: pip install pytest, pytest
+        run: pip install pytest; pytest
         
  

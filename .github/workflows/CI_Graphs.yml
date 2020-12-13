@@ -1,5 +1,5 @@
 
-name: CI_Graphs
+name: CI_GraphsTrees
 
 # Controls when the action will run. 
 on:
@@ -32,12 +32,11 @@ jobs:
 
       - name: Install dependencies
         run:
-          conda install numpy pandas
+          pip install numpy 
+          pip install pandas
 
       # Run the graph test files
       - name: Run Graphh test files
-        run: 
-          python test_graph.py
-          python test_wtGraph.py
+        run: pip install pytest, pytest
         
  

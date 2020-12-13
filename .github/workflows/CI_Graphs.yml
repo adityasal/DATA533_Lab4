@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run:
-          conda install numpy, pandas
+          conda install numpy pandas
 
       # Run the graph test files
       - name: Run Graphh test files

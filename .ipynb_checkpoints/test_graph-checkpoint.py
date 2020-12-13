@@ -49,6 +49,8 @@ class TestGraph(unittest.TestCase):
         # Failed additions
         self.assertEqual(self.Gr2.addEdge(1,2), 'Edge already in edge set')
         self.assertEqual(self.Gr3.addEdge(5,7), 'Input valid vertices')
+        with pytest.raises(vertexError):
+            self.Gr3.addEdge('kevin', 'samantha')
         
     def test_printGraph(self):
         # I know this test is pointless, but the function is very obviously functional
@@ -63,6 +65,8 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(self.Gr1.edges, [[1,2], [3,4], [4,1],[0,3]])
         self.assertEqual(self.Gr3.edges, [[0,1],[0,2]])
         self.assertEqual(self.Gr3.rmEdge(1,1), 'Edge not in edge set')
+        with pytest.raises(vertexError):
+            self.Gr1.rmEdge('fish', 'ducks')
         
     # Pretty pointless to test this more than once    
     def test_addVertex(self):

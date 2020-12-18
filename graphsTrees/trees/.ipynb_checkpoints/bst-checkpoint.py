@@ -1,10 +1,15 @@
-from node import Node
-from tree import Tree
+from graphsTrees.trees.node import Node
+from graphsTrees.trees.tree import Tree
+from graphsTrees.exceptions.TreeExceptions import NodeError
+from graphsTrees.exceptions.TreeExceptions import NodeKeyError
 
 class BST(Tree):
     
     def create_node(self,key):
-        return Node(key)
+        try: 
+            return Node(int(key))
+        except ValueError:
+            raise NodeKeyError
     
     def insert(self, node, key):
         if node is None:
@@ -16,29 +21,37 @@ class BST(Tree):
         return node
     
     def search_node(self,node,key):
-        if node is None:
-            return "Node {} does not exist".format(key)
-        if node.key == key:
-            return "Node {} exists".format(key)
-        if node.key<key:
-            return self.search_node(node.right,key)
-        else:
-            return self.search_node(node.left,key)
+        try: 
+            if node is None:
+                return "Node {} does not exist".format(int(key))
+            if node.key == key:
+                return "Node {} exists".format(int(key))
+            if node.key<key:
+                return self.search_node(node.right,int(key))
+            else:
+                return self.search_node(node.left,int(key))
+        except ValueError:
+            raise NodeKeyError
     
     def delete_node(self,node,key):
-        if key < node.key:
-            node.left = self.delete_node(node.left,key)
-        elif key>node.key:
-            node.right = self.delete_node(node.right,key)
-        else:
-            if node.left is None and node.right is None:
-                return None
-            elif node.left is None:
-                swap = node.right
-                del node
-                return swap 
-            elif node.right is None:
-                swap = node.left
-                del node
-                return swap
-        return node
+        try: 
+            if key < node.key:
+                node.left = self.delete_node(node.left,key)
+            elif key>node.key:
+                node.right = self.delete_node(node.right,key)
+            else:
+                if node.left is None and node.right is None:
+                    return None
+                elif node.left is None:
+                    swap = node.right
+                    del node
+                    return swap 
+                elif node.right is None:
+                    swap = node.left
+                    del node
+                    return swap
+            return node
+        except ValueError:
+            raise NodeKeyError
+
+

@@ -3,6 +3,7 @@ import unittest
 from graphsTrees.trees.node import Node
 from graphsTrees.trees.tree import Tree
 from graphsTrees.trees.bst import BST
+from graphsTrees.exceptions.TreeExceptions import NodeError,NodeKeyError
 
 class TestBST (unittest.TestCase):
     

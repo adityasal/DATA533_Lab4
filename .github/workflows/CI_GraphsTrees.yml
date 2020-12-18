@@ -36,7 +36,7 @@ jobs:
           pip install pandas
 
       # Run the graph test files
-      - name: Run Graphh test files
+      - name: Run test files
         run: pip install pytest; pytest
         
  

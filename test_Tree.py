@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from graphsTrees.trees.node import Node
 from graphsTrees.trees.tree import Tree
@@ -32,6 +33,9 @@ class TestTree (unittest.TestCase):
         self.assertEqual(t1_root_node.key,5)
         self.assertEqual(t1_root_node.left,11)
         
+        with pytest.raises(NodeKeyError):
+            self.t1.create_node('a')
+        
     
     def test_insert(self):
         t2_root_node = self.t2.create_node(10)
@@ -51,6 +55,9 @@ class TestTree (unittest.TestCase):
         self.assertIsInstance(t3_root_node,Node)
         self.assertEqual(self.t3.search_node(t3_root_node,15),"Node 15 exists")
         self.assertEqual(self.t3.search_node(t3_root_node,0),"Node 0 does not exist")
+        
+        with pytest.raises(NodeKeyError):
+            self.t3.search_node(t3_root_node,'a')
 
 
 

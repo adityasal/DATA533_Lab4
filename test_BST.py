@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from graphsTrees.trees.node import Node
 from graphsTrees.trees.tree import Tree
@@ -30,6 +31,7 @@ class TestBST (unittest.TestCase):
         print('Teardown')
     
     def test_create_node(self):
+        
         bst1_root_node = self.bst1.create_node(5)
         bst1_root_node.left = 11
         
@@ -37,6 +39,9 @@ class TestBST (unittest.TestCase):
         self.assertIsInstance(bst1_root_node,Node)
         self.assertEqual(bst1_root_node.key,5)
         self.assertEqual(bst1_root_node.left,11)
+        
+        with pytest.raises(NodeKeyError):
+            self.bst1.create_node('a')
     
     def test_insert(self):
         bst2_root_node = self.bst2.create_node(10)
@@ -56,6 +61,9 @@ class TestBST (unittest.TestCase):
         self.assertIsInstance(bst3_root_node,Node)
         self.assertEqual(self.bst3.search_node(bst3_root_node,15),"Node 15 exists")
         self.assertEqual(self.bst3.search_node(bst3_root_node,0),"Node 0 does not exist")
+        
+        with pytest.raises(NodeKeyError):
+            self.bst3.search_node(bst3_root_node,'a')
     
     def test_delete_node(self):
         bst4_root_node = self.bst4.create_node(10)
@@ -71,6 +79,9 @@ class TestBST (unittest.TestCase):
         
         self.assertEqual(bst4_root_node.right,None)
         self.assertEqual(bst4_root_node.left.key,0)  
+        
+        with pytest.raises(NodeKeyError):
+            self.bst4.delete_node(bst4_root_node,'a')
     
     def test_preorder(self):
         bst5_root_node = self.bst5.create_node(10)
